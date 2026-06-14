@@ -19,20 +19,18 @@ class ApiCarteleraController extends AbstractController
     #[Route('', methods: ['GET'], name: 'list')]
     public function list(Request $request, EntityManagerInterface $em): JsonResponse
     {
-        $day = $request->query->get('day', 'today');
         $movies = $em->getRepository(Movie::class)->findAll();
         $data = [];
         foreach ($movies as $movie) {
             $sessions = $em->getRepository(Session::class)->findBy(['movie' => $movie->getId()]);
             $d = [];
             foreach ($sessions as $session) {
-                if ($session->getDatetime() == new \DateTime()) {
                     $d[] = [
                         'datetime' => $session->getDatetime()->format('Y-m-d H:i:s'),
                         'room' => $session->getRoom(),
                         'price' => $session->getPrice(),
                     ];
-                }
+
             }
             if($d) {
                 $data[] = [
