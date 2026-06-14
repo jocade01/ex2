@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Session index{% endblock %}
+
+{% block body %}
+    <h1>Session index</h1>
+<a href="/">Volver</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Movie</th>
+                <th>Datetime</th>
+                <th>Room</th>
+                <th>Price</th>
+                {% if app.user %}
+                <th>actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+        {% for session in sessions %}
+            <tr {% if session.datetime < date() %} style="color : grey;" {% endif %}>
+                <td>{{ session.movie.title }}</td>
+                <td>{{ session.datetime ? session.datetime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ session.room }}</td>
+                {% if session.datetime < date()%}
+            <td>Finalizada</td>
+                {% else %}
+                <td>{{ session.price }}</td>
+                    {% endif %}
+                <td>
+                    {% if app.user %}
+                    <a href="{{ path('app_session_edit', {'id': session.id}) }}">edit</a>
+                    <a href="{{ path('app_session_delete', {'id': session.id}) }}">delete</a>
+
+                </td>
+            {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_session_new') }}">Create new</a>
+{% endblock %}
