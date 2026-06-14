@@ -18,6 +18,12 @@
         <a href="/login">Login</a>
     {%endif %}
     <a href="/session">Sesiones</a>
+    <p>{{ moviet }}</p>
+    {% for movie in moviee %}
+    {% for movi in movie %}
+    <p>{{ movi.room }}</p>
+    {% endfor %}     {% endfor %}
+
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code>C:/Users/Jose/PhpstormProjects/25-26-dwes-ex2ev-MarcosRP13-main/ex2/src/Controller/MainController.php</code></li>
@@ -42,7 +48,7 @@
                 {{ session.movie.synopsis }}
             </td>
             <td>
-                {{ session.movie.trailer }}
+                <a href=" {{ session.movie.trailer }}"> {{ session.movie.trailer }}</a>
             </td>
         </tr>
     {% endfor %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Session;
 use App\Form\SessionType;
+use App\Repository\MovieRepository;
 use App\Repository\SessionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,9 +16,10 @@ use Symfony\Component\Routing\Attribute\Route;
 final class SessionController extends AbstractController
 {
     #[Route(name: 'app_session_index', methods: ['GET'])]
-    public function index(SessionRepository $sessionRepository): Response
+    public function index(SessionRepository $sessionRepository, MovieRepository $movieRepository): Response
     {
         return $this->render('session/index.html.twig', [
+            'movies' => $movieRepository->findAll(),
             'sessions' => $sessionRepository->findAll(),
         ]);
     }

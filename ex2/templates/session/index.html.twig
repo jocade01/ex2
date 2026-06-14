@@ -5,6 +5,10 @@
 {% block body %}
     <h1>Session index</h1>
 <a href="/">Volver</a>
+    {% if app.user %}
+    <h1>Hello {{ app.user.name }}</h1>
+    {% endif %}
+    <a href="../logout">A</a>
     <table class="table">
         <thead>
             <tr>
@@ -23,6 +27,7 @@
                 <td>{{ session.movie.title }}</td>
                 <td>{{ session.datetime ? session.datetime|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ session.room }}</td>
+
                 {% if session.datetime < date()%}
             <td>Finalizada</td>
                 {% else %}
@@ -40,6 +45,9 @@
             <tr>
                 <td colspan="5">no records found</td>
             </tr>
+        {% endfor %}
+        {% for movie in movies %}
+        <p>{{ movie.title }}</p>
         {% endfor %}
         </tbody>
     </table>
